@@ -1,0 +1,150 @@
+/* diseño de register */
+
+.register-wrapper {
+  height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.register-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+}
+
+.register-container h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.messages {
+  margin-bottom: 1rem;
+}
+
+.messages div {
+  background-color: rgba(255, 0, 0, 0.7);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #fff;
+  text-align: center;
+}
+
+form label {
+  display: block;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  color: #eee;
+}
+
+form input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+form input:focus {
+  outline: none;
+  box-shadow: 0 0 8px #6b73ff;
+}
+
+.errorlist {
+  color: #ffdddd;
+  margin: 0.3rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 0.85rem;
+}
+
+form button {
+  margin-top: 1.8rem;
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #4169e1;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+form button:hover {
+  background-color: #27408b;
+}
+
+.login-link {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.login-link a {
+  color: #aaddff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Diseño de la ventana donde se envia el token hacia el correo del usuario */
+
+/* Contenedor principal de error */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh; /* Centrado vertical en la pantalla */
+  text-align: center;
+  padding: 20px;
+}
+
+.error-container h1 {
+  font-size: 2.5rem;
+  color: greenyellow; 
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.error-container p {
+  font-size: 1.1rem;
+  color: white;
+  margin-bottom: 2rem;
+  max-width: 400px;
+}
+
+/* Estilo del botón */
+.btn-return {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #333; /* O el color principal de tu marca */
+  color: #fff !important;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-return:hover {
+  background-color: #555;
+  transform: translateY(-2px);
+}

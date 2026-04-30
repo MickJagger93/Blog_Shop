@@ -1,0 +1,28 @@
+{% for product in products %}
+    
+    <li class="product-item reveal {% if product.quantity <= 0 %}out-of-stock{% endif %}"
+        data-id="{{ product.id }}" 
+        data-name="{{ product.name }}" 
+        data-price="{{ product.price }}" 
+        data-description="{{ product.description }}" 
+        data-quantity="{{ product.stock }}" 
+        data-image="{{ product.image.url }}">
+        
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
+        <h3>{{ product.name }}</h3>
+        <h3>{{ product.price }}$</h3>
+
+        {% if product.stock > 0 %}
+            <button class="btn-view" type="button">Ver</button>
+        {% else %}
+            <span class="badge-out">Publicación en pausa</span>
+            <button class="btn-view" type="button" disabled>No disponible</button>
+        {% endif %}
+    </li>
+
+{% empty %}
+    
+    <p>No se encontraron productos.</p>
+
+{% endfor %}
+

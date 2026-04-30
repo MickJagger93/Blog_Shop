@@ -1,0 +1,220 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/base/base.css' %}">
+
+{% endblock %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+        <a href="{% url 'cart:cart' %}" id="cart-icon" class="cart-icon" title="Ver carrito">
+            
+            <img src="/static/img/cart.svg" alt="View cart" class="cart-svg"/>
+            <span id="cart-counter" class="cart-counter">{{ cart_total_items|default:0 }}</span>
+        
+        </a>
+
+    {% endif %}
+
+    {% if messages %}
+                
+        <div class="messages">
+        
+            {% for message in messages %}
+                <div class="{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        
+        </div>
+    
+    {% endif %}
+  
+    <div class="container">
+        
+        <section class="welcome-container reveal">
+        
+            <h2 class="title">JAGGER SHOP</h2>
+            <p>Una plataforma donde puedes compartir ideas y encontrar productos de tu interés.</p>
+        
+        </section>
+        
+        <section class="blog-section reveal delay-1">
+
+            <a href="{% url 'post:post' %}" class="blog-image-link" aria-label="Ir al Blog">
+
+                <div class="blog-image-container">
+                
+                    <div class="blog-image"></div>
+                    <h1 class="blog-title">BLOG</h1>
+
+                </div>
+
+            </a>
+
+            <div class="blog-description">
+                
+                <p>Explora artículos, tutoriales y las últimas noticias sobre programación y desarrollo.</p>
+            
+            </div>
+
+            <div class="featured-posts">
+                
+                <h2>Posts destacados</h2>
+
+                <div class="post-images">
+                
+                    {% for post in posts %}
+                    
+                        <div class="post-card" data-title="{{ post.title }}" data-author="{{ post.author.username }}" data-date="{{ post.created_at|date:'F j, Y' }}">
+                            
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                            {% endif %}
+
+                            <div class="post-full-content" style="display:none;">
+                                {{ post.content|linebreaks }}
+                            </div>
+                        
+                        </div>
+                    
+                    {% endfor %}
+                
+                </div>
+            
+            </div>
+
+        </section>
+
+        <section class="shop-section reveal delay-2">
+
+            <a href="{% url 'shop:shop' %}" class="shop-image-link" aria-label="Go to shop">
+
+                <div class="shop-image-container">
+                
+                    <div class="shop-image"></div>
+                    <h1 class="shop-title">TIENDA</h1>
+
+                </div>
+
+            </a>
+
+            <div class="shop-description">
+            
+                <p>Encuentra las mejores herramientas de hardware y software para potenciar tu flujo de trabajo de desarrollo.</p>
+        
+            </div>
+
+            <div class="featured-products">
+
+                <h2>Productos destacados</h2>
+
+                <ul class="product-list">
+                
+                    {% for product in products %}
+                        
+                        <li class="product-item {% if product.stock <= 0 %}out-of-stock{% endif %}"
+                            data-id="{{ product.id }}" 
+                            data-name="{{ product.name }}" 
+                            data-price="{{ product.price }}" 
+                            data-description="{{ product.description }}" 
+                            data-quantity="{{ product.stock }}" 
+                            data-image="{{ product.image.url }}">
+
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
+                            <h3>{{ product.name }}</h3>
+                            <h3>{{ product.price }}$</h3>
+
+                            {% if product.stock > 0 %}
+                                <button class="btn-view" type="button">Ver</button>
+                            {% else %}
+                                <span class="badge-out">Pausado</span>
+                                <button class="btn-view" type="button" disabled>Sin Stock</button>
+                            {% endif %}
+
+                        </li>
+                    
+                    {% empty %}
+                        <p>No hay productos destacados.</p>
+                    {% endfor %}
+
+                </ul>
+        
+            </div>
+
+        </section>
+
+        <section class="payment-methods reveal delay-3">
+        
+            <h3>Opciones de pagos</h3>
+            
+            <div class="icons-container">
+                
+                <img src="{% static 'img/stripe-logo.svg' %}" alt="Stripe">
+                
+                <img src="{% static 'img/bank-transfer.svg' %}" alt="Bank Transfer">
+            
+            </div>
+            
+            <p>Pago seguro mediante Stripe y transferencia bancaria.</p>
+        
+        </section>
+
+    </div>
+
+    <div id="post-modal" class="modal" style="display:none;">
+                
+        <div class="modal-content">
+        
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p><strong>Autor:</strong> <span id="modal-author"></span></p>
+            <p><strong>Fecha:</strong> <span id="modal-date"></span></p>
+        
+            <div id="modal-content"></div>
+    
+        </div>
+    
+    </div>
+
+    <div id="productModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-name">
+
+        <div class="modal-content">
+
+            <img id="modal-img" src="" alt="">
+            <button class="close-btn" aria-label="Cerrar modal">&times;</button>
+            <h2 id="modal-name"></h2>
+            <p><strong>Precio:</strong> $<span id="modal-price"></span></p>
+            <p id="modal-description"></p>
+            <p><strong>Disponible:</strong> <span id="modal-quantity"></span></p>
+
+            <div class="quantity-control">
+                
+                <button type="button" id="quantity-decrease" aria-label="Disminuir cantidad">−</button>
+                <input type="text" id="quantity-input" value="1" readonly aria-live="polite" aria-label="Cantidad a comprar" />
+                <button type="button" id="quantity-increase" aria-label="Incrementar cantidad">+</button>
+            
+            </div>
+
+            <button id="add-to-cart" type="button">Aañadir al carrito</button>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block scripts %} 
+
+    <script>
+        const isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}".toLowerCase() === 'true';
+    </script>
+
+    <script src="{% static 'js/base.js' %}"></script>
+
+{% endblock %}

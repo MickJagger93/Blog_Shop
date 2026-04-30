@@ -1,0 +1,63 @@
+{% extends "layout/base.html" %}
+
+{% load static %}
+
+{% block extra_css %} 
+
+    <link rel="stylesheet" href="{% static 'style/shop/shop.css' %}">
+
+{% endblock %}
+
+{% block title %}Tienda{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        
+        <a href="{% url 'cart:cart' %}" id="cart-icon" class="cart-icon" title="View cart">
+            
+            <img src="/static/img/cart.svg" alt="View cart" class="cart-svg"/>
+            <span id="cart-counter" class="cart-counter">{{ cart_total_items|default:0 }}</span>
+        
+        </a>
+
+    {% endif %}    
+
+    <div class="shop-page">
+
+        <section class="shop-header reveal">
+            
+            <h1>Tienda</h1>
+        
+        </section>
+
+        <section class="shop-categories">
+            
+            <h2 class="sub-title reveal">Catálogo</h2>
+
+            <div class="cards-container">
+
+                {% for category in categories %}
+                    
+                    <a href="{% url 'shop:category' category.slug %}" class="category-card reveal">
+                    
+                        <div class="image-container">
+                            
+                            <img src="{% static 'img/'|add:category.slug|add:'.png' %}" alt="{{ category.name }}" class="category-img">
+                            <div class="overlay-text">{{ category.name }}</div>
+                        
+                        </div>
+                    
+                    </a>
+
+                {% empty %}
+                    <p>No hay categorías disponibles.</p>
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </div>
+
+{% endblock %}

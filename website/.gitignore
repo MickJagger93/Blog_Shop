@@ -1,0 +1,28 @@
+# Cache de Python (el doble asterisco busca en todas las subcarpetas)
+**/__pycache__/
+*.py[cod]
+
+# Entorno virtual 
+env/
+venv/
+.venv/
+
+# Variables de entorno
+.env
+
+# Base de datos local
+db.sqlite3
+
+# Archivos de medios
+media/
+
+# Archivos estaticos
+staticfiles/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/

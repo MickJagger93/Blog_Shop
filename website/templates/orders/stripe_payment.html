@@ -1,0 +1,48 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/shop/checkout.css' %}">
+
+{% endblock %}
+
+{% block title %}Pagos Stripe{% endblock %}
+
+{% block content %}
+
+    <div class="stripe-container">
+        
+        <h1 class="stripe-title">Realizar pagos</h1>
+
+        <form id="payment-form" class="stripe-form" novalidate>
+            
+            <label for="card-element" id="payment-label" class="payment-label">Datos de la tarjeta</label>
+            <div id="card-element" class="stripe-card-element"></div>
+            
+            <div id="error-message" class="stripe-error-message" role="alert"></div>
+            
+            <button type="submit" id="payment-submit" class="stripe-submit">Pagar</button>
+        
+        </form>
+    
+    </div>
+
+    <div class="btn-back-methods">
+        <a href="{% url 'orders:payment_method' %}">Volver</a>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+        window.STRIPE_PUBLIC_KEY = "{{ stripe_public_key }}";
+    </script>
+    
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <script src="{% static 'js/stripe.js' %}"></script>
+
+{% endblock %}

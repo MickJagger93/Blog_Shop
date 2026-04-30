@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personal Website | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style/base/base.css' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/online-shop.svg' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    {% include 'layout/partials/menu.html' %}
+
+    <main>
+    
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    {% include 'layout/partials/footer.html' %}
+
+    {% if user.is_authenticated %}
+
+        {% include 'layout/partials/side_cart.html' %}
+
+    {% endif %}
+
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

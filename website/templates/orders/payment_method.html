@@ -1,0 +1,37 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/shop/checkout.css' %}">
+
+{% endblock %}
+
+{% block title %}Método de pago{% endblock %}
+
+{% block content %}
+    
+    <div class="method-container">
+        
+        <h2 class="section-title">Selecciona tu método de pago</h2>
+        
+        <div class="methods-grid">
+            
+            <a href="{% url 'orders:stripe_payment' %}" class="method-card">
+                <div class="icon">💳</div>
+                <h3>Tarjeta de crédito</h3>
+                <p>Pagos vía Stripe</p>
+            </a>
+
+            <a href="{% url 'orders:bank_transfer' %}" class="method-card">
+                <div class="icon">🏦</div>
+                <h3>Transferencia bancaria</h3>
+                <p>Datos bancarios</p>
+            </a>
+
+        </div>
+    
+    </div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/shop/checkout.css' %}">
+
+{% endblock %}
+
+{% block title %}Transferencia bancaria{% endblock %}
+
+{% block content %}
+    
+    <div class="bank-container">
+        
+        <div class="bank-info">
+        
+            <h2 class="bank-title">Pago por transferencia</h2>
+            <p class="bank-subtitle">Completa tu pago con los siguientes datos para confirmar tu pedido.</p>
+            
+            <div class="bank-details">
+        
+                <div class="detail-row">
+                    <span class="label">Banco:</span>
+                    <span class="value">{{ bank_details.bank }}</span>
+                </div>
+        
+                <div class="detail-row">
+                    <span class="label">Propietario:</span>
+                    <span class="value">{{ bank_details.owner }}</span>
+                </div>
+        
+                <div class="detail-row">
+                    <span class="label">DNI:</span>
+                    <span class="value">{{ bank_details.id_number }}</span>
+                </div>
+        
+                <div class="detail-row">
+                    <span class="label">Número de cuenta:</span>
+                    <span class="value account-number">{{ bank_details.account_number }}</span>
+        
+                </div>
+        
+            </div>
+
+            <div class="payment-instructions">
+                <p><strong>Importante:</strong> Tu pedido será procesado una vez que confirmemos los fondos en nuestra cuenta.</p>
+            </div>
+
+            <form method="post" class="payment-form">
+        
+                {% csrf_token %}
+        
+                <div class="action-buttons">
+                    <a href="{% url 'orders:payment_method' %}" class="btn-back">Back</a>
+                    <button type="submit" class="btn-confirm">Pago completado</button>
+                </div>
+        
+            </form>
+        
+        </div>
+    
+    </div>
+
+{% endblock %}

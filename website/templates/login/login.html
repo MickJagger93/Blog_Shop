@@ -1,0 +1,59 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/auth/login.css' %}">
+
+{% endblock %}
+
+{% block title %} Inicio de sesión {% endblock %}
+
+{% block content %}
+
+    <div class="login-wrapper reveal">
+
+        <div class="login-container">
+            
+            <h2>Iniciar sesión</h2>
+
+            {% if messages %}
+                
+                <div class="messages">
+                
+                    {% for message in messages %}
+                        <div class="{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                
+                </div>
+            
+            {% endif %}
+
+            <form method="POST" novalidate>
+                
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                    {{ form.username }}
+
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                    {{ form.password }}
+
+                {{ form.username.errors }}
+                {{ form.password.errors }}
+
+                <button type="submit">Ingresar</button>
+            
+            </form>
+
+            <div class="reset-password-link">
+                <a href="{% url 'user:password_reset' %}">¿Olvidaste tu contraseña?</a>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

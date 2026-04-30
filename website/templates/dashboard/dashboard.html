@@ -1,0 +1,163 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/dashboard/dashboard.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    
+    <div class="dashboard-container">
+        
+        <div class="dashboard-header no-print">
+
+            <a href="{% url 'admin:index' %}" class="btn-action btn-admin" target="_blank">
+                Ir al Panel de Control
+            </a>
+
+            <div>
+
+                <button onclick="generarReportePDF()" class="btn-action btn-pdf">
+                    Exportar Reporte (PDF)
+                </button>
+
+                <form action="{% url 'dashboard:clean_history' %}" method="POST" style="display: inline;" 
+                    
+                    onsubmit="return confirm('¿Estás seguro de borrar TODO el historial?');"> 
+                    {% csrf_token %}
+                    
+                    <button type="submit" class="btn-action btn-delete">
+                        Limpiar Historial
+                    </button>
+                
+                </form>
+        
+            </div>
+        
+        </div>
+        
+        <h1 class="dashboard-title">Panel de Análisis</h1>
+
+        <div class="customizer-container no-print">
+            
+            <div class="checkbox-group">
+                
+                <label><input type="checkbox" checked onchange="toggleDashboardSection('charts-grid', this)"> Gráficos</label>
+                <label><input type="checkbox" checked onchange="toggleDashboardSection('table-container', this)"> Tabla de Búsquedas</label>
+                
+            </div>
+        
+        </div>
+
+        <div class="filter-container">
+        
+            <span class="filter-label">Filtrar por:</span>
+            <a href="?periodo=hoy" class="btn-filter {% if periodo == 'hoy' %}active{% endif %}">Hoy</a>
+            <a href="?periodo=semana" class="btn-filter {% if periodo == 'semana' %}active{% endif %}">Últimos 7 días</a>
+            <a href="?periodo=mes" class="btn-filter {% if periodo == 'mes' %}active{% endif %}">Último Mes</a>
+            <a href="?periodo=todo" class="btn-filter {% if periodo == 'todo' or not periodo %}active{% endif %}">Todo</a>
+        
+        </div>
+
+        <div class="charts-grid">
+        
+            <div class="chart-card">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            
+                    <h3>Rendimiento de Productos</h3>
+                    
+                    <div class="chart-controls no-print" style="font-size: 0.8rem; color: white;">
+                        
+                        <label style="margin-left: 10px;">
+                            <input type="checkbox" id="check-buscados" checked onchange="updateChart()"> Buscados
+                        </label>
+                        
+                        <label style="margin-left: 10px;">
+                            <input type="checkbox" id="check-vendidos" checked onchange="updateChart()"> Vendidos
+                        </label>
+                        
+                        <label style="margin-left: 10px;">
+                            <input type="checkbox" id="check-carrito" checked onchange="updateChart()"> Carrito
+                        </label>
+                    
+                    </div>
+            
+                </div>
+                
+                <canvas id="searchChart"></canvas>
+            
+            </div>
+
+
+            <div class="chart-card">
+                
+                <h3>Posts más Populares</h3>
+                <canvas id="postChart"></canvas>
+            
+            </div>
+        
+        </div>
+
+        <div class="table-container">
+        
+            <h3 class="table-title">Términos más buscados (Oportunidades de Inventario)</h3>
+            
+            <table class="data-table">
+        
+                <thead>
+                    <tr>
+                        <th>Palabra Clave</th>
+                        <th style="text-align: center;">Frecuencia</th>
+                        <th style="text-align: right;">Acción sugerida</th>
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    
+                    {% for item in busquedas_tabla %}
+                    
+                    <tr>
+                        
+                        <td>{{ item.description|cut:"Buscó: " }}</td>
+                        <td style="text-align: center;">
+                            <span class="badge-count">{{ item.total }}</span>
+                        </td>
+                        <td style="text-align: right;" class="text-success-light">
+                            <small>Evaluar stock</small>
+                        </td>
+                    
+                    </tr>
+                    
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: #666;">No hay datos de búsqueda en este periodo.</td>
+                        </tr>
+                    {% endfor %}
+                
+                </tbody>
+
+            </table>
+        
+        </div>
+    
+    </div>
+
+    {{ search_labels|json_script:"search-labels-data" }}
+    {{ search_data|json_script:"search-data-data" }}
+    {{ vendidos_data|json_script:"vendidos-data" }}
+    {{ carrito_data|json_script:"carrito-data" }}
+    {{ post_labels|json_script:"post-labels-data" }}
+    {{ post_data|json_script:"post-data-data" }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+    
+{% endblock %}
+

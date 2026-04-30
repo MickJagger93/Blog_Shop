@@ -1,0 +1,455 @@
+/* Diseño de la vista shop */
+
+.shop-page {
+  max-width: 900px;
+  margin: 5rem auto;
+  padding: 0 1.5rem;
+  color: #fff;
+}
+
+.shop-page section {
+  margin-bottom: 2rem;
+}
+
+.shop-header h1 {
+  font-size: 3rem;
+  margin: 0 0 1rem;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.user-greeting p {
+  font-size: 1.15rem;
+  margin: 0;
+  color: #dfe9ff;
+}
+
+.shop-categories h2 {
+  font-size: 2rem;
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.shop-categories ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 1rem;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.shop-categories li {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  padding: 0.6rem 1.2rem;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.shop-categories a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  display: block;
+}
+
+.shop-categories li:hover, 
+.shop-categories li a:hover {
+  background-color: rgba(170, 221, 255, 0.2);
+  color: #aaddff;
+  cursor: pointer;
+}
+
+/* Contenedor del buscador centrado */
+
+.search-form {
+    display: flex;
+    justify-content: center; 
+    align-items: stretch;
+    margin: 0 auto 3rem auto; 
+    gap: 0; 
+    max-width: 600px; 
+    padding: 0 20px;
+}
+
+/* El campo de texto */
+.search-form input[type="text"] {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0; 
+    border-radius: 30px;       
+    outline: none;
+    font-size: 1rem;
+    width: 100%; 
+    transition: all 0.3s ease;
+    box-sizing: border-box; 
+    height: 45px;
+}
+
+.search-form input[type="text"]:focus {
+    border-color: #007bff;
+    box-shadow: -4px 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Diseño de las categorias */
+
+.cards-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.category-card {
+  flex: 0 0 280px;
+  border: 1px solid #ccc; 
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.category-card:hover {
+  box-shadow: 0 8px 20px rgba(0,123,255,0.4);
+  transform: translateY(-5px);
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  border-bottom: 1px solid #ccc; 
+}
+
+.category-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+  pointer-events: none;
+}
+
+/* Paginacion de producots */
+
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.pagination a {
+  margin: 0 1rem;
+  color: #aaddff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.pagination a:hover {
+  text-decoration: underline;
+  color: #70a9ff;
+}
+
+/* Diseño del icono de carrito de compra */
+
+.cart-icon {
+  position: fixed;
+  top: 20px;    
+  right: 20px;  
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.cart-icon {
+  position: fixed;
+  top: 65px;
+  right: 30px;
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.cart-svg {
+  width: 34px;
+  height: 34px;
+  display: block; 
+}
+
+.cart-counter {
+  margin-left: 8px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Contenedor del producto agotado */
+
+.product-item.out-of-stock {
+    opacity: 0.7; 
+    filter: grayscale(0.4); 
+    pointer-events: none; 
+}
+
+/* Permitir que el badge se vea bien aunque el resto esté opaco */
+.product-item.out-of-stock .badge-out {
+    pointer-events: auto;
+}
+
+/* El aviso de "Pausa" */
+.badge-out {
+    display: inline-block;
+    background-color: #ff4757; 
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s ease;
+}
+
+/* Estilo para el botón de View cuando está deshabilitado */
+.btn-view:disabled {
+    background-color: #ced4da !important;
+    color: #6c757d !important;
+    cursor: not-allowed;
+    border: none;
+    transform: none !important; 
+}
+
+/* Animación simple */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Diseño de la vista del carrito de compra */
+
+h1 {
+  color: white;
+  text-align: center;
+  top: 35px;
+}
+
+.content-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.cart-table th {
+  background-color: #003366;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cart-table td {
+  border-bottom: 1px solid #444;
+  padding: 12px;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+/* Primera columna: flex para alinear imagen y texto */
+
+.cart-table td:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  font-weight: bold;
+  padding-left: 12px;
+  color: white;
+}
+
+/* Imagen producto */
+
+.cart-row {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* Nombre producto */
+
+.cart-table td:first-child span.product-name {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+/* Formulario en columna cantidad */
+
+.cart-table td:nth-child(3) form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+}
+
+/* Input cantidad */
+
+input[type="number"] {
+  width: 50px;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  text-align: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 5px;
+}
+
+/* Botones */
+
+button, .cart-btn {
+  height: 36px;
+  min-width: 40px;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+  margin: 0;
+}
+
+.cart-btn-update {
+  background-color: #007bff;
+}
+
+.cart-btn-update:hover {
+  background-color: #0056b3;
+}
+
+.cart-btn-remove {
+  background-color: #dc3545;
+}
+
+.cart-btn-remove:hover {
+  background-color: #a71d2a;
+}
+
+/* Última columna centrada */
+.cart-table td:last-child {
+  text-align: center;
+}
+
+/* Filas: efecto hover */
+tbody tr:hover {
+  background-color: #003366;
+  color: white;
+}
+
+tbody tr:hover td {
+  color: white;
+}
+
+/* Botón volver a tienda */
+
+.btn-back-to-shop {
+  display: block;
+  width: max-content;
+  margin: 20px auto 0 auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-back-to-shop:hover {
+  background-color: #0056b3;
+  text-decoration: none;
+}
+
+.total-price{
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 25px;
+}
+
+.btn-back-to-shop {
+  display: inline-block;       
+  margin: 20px auto 0 auto;    
+  padding: 10px 20px;          
+  background-color: #007bff;   
+  color: white;                
+  text-align: center;
+  border-radius: 5px;          
+  text-decoration: none;       
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Para centrar en bloque */
+
+.btn-back-to-shop {
+  display: block;
+  width: max-content;
+}
+
+/* Cambia color al pasar cursor */
+.btn-back-to-shop:hover {
+  background-color: #0056b3;
+  text-decoration: none;       
+}

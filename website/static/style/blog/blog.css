@@ -1,0 +1,133 @@
+/* diseño del blog */
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.post-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+}
+
+.post-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.post-title {
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  user-select: none;
+}
+
+/* Paginación */
+
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.pagination a {
+  margin: 0 1rem;
+  color: #aaddff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.pagination a:hover {
+  text-decoration: underline;
+  color: #70a9ff;
+}
+
+/* Diseño para el modal de los posts */
+
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.65);
+  animation: fadeInBg 0.5s forwards;
+}
+
+.modal-content {
+  background-color: #222 !important;
+  margin: 5% auto;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  color: #fff;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.modal-content p {
+  color: #fff;
+  text-align: left;
+  margin-bottom: 1rem;
+  font-weight: normal;
+}
+
+.close-button {
+  position: absolute;
+  right: 1.5rem;
+  top: 1rem;
+  font-size: 2.5rem;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.close-button:hover {
+  color: #fff;
+}
+
+/* Mensaje cuando no hay posts */
+
+.no-posts {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #bbb;
+  margin-top: 3rem;
+}

@@ -1,0 +1,22 @@
+{% for item in cart.values %}
+    
+    <div class="cart-item-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+    
+        <img src="{{ item.image }}" alt="{{ item.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+    
+        <div class="cart-item-info">
+    
+            <h4 style="margin: 0; font-size: 0.9rem; color: white;">{{ item.name }}</h4>
+            <p style="margin: 0; font-size: 0.8rem; color: #888;">
+                {{ item.quantity }} x <span style="color: #4bc0c0;">${{ item.price }}</span>
+            </p>
+    
+        </div>
+    
+    </div>
+
+{% empty %}
+    <p style="text-align: center; color: #666;">Tu carrito está vacío.</p>
+{% endfor %}
+
+<input type="hidden" id="hidden-total" value="{{ total }}">

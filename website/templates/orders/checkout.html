@@ -1,0 +1,48 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/shop/checkout.css' %}">
+
+{% endblock %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+    
+    <div class="checkout-container">
+    
+        <h2>Checkout</h2>
+        
+        <form method="post" novalidate>
+            
+            {% csrf_token %}
+
+            {% for field in form %}
+                
+                <div class="form-group">
+                    
+                    {{ field.label_tag }}
+                    {{ field }}
+                
+                    {% if field.errors %}
+                        <div class="error">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                
+                </div>
+            
+            {% endfor %}
+
+            <div class="btn-container">
+                <button type="submit" class="payment-submit">Ir al pago</button>
+            </div>
+        
+        </form>
+    
+    </div>
+
+    <a href="{% url 'cart:cart' %}" class="btn-back-to-cart">Ir al carrito</a>
+
+{% endblock %}

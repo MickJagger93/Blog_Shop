@@ -1,0 +1,56 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/shop/checkout.css' %}">
+
+{% endblock %}
+
+{% block title %}Mis Compras{% endblock %}
+
+{% block content %}
+    
+    <div class="mis-compras-container">
+        
+        <h2>Mis Compras</h2>
+
+        {% if pedidos %}
+            
+            <ul class="pedidos-lista">
+            
+                {% for pedido in pedidos %}
+            
+                    <li class="pedido-item">
+                
+                        <div class="pedido-header">
+                            
+                            <strong>Pedido #{{ pedido.id }}</strong>
+                            <span class="pedido-fecha">{{ pedido.created_at|date:"d/m/Y H:i" }}</span>
+                        
+                        </div>
+                
+                        <div class="pedido-detalles">
+                        
+                            <p><strong>Nombre:</strong> {{ pedido.full_name }}</p>
+                            <p><strong>Dirección:</strong> {{ pedido.address }}, {{ pedido.city }}, {{ pedido.country }}</p>
+                        
+                        </div>
+                
+                        <a href="{% url 'orders:detalle_pedido' pedido.id %}" class="btn-detalle">Ver detalles</a>
+                
+                    </li>
+                
+                {% endfor %}
+            
+            </ul>
+        
+        {% else %}
+            <p class="sin-pedidos-msg">Aún no has realizado ningún pedido</p>
+        {% endif %}
+    
+    </div>
+
+{% endblock %}
+

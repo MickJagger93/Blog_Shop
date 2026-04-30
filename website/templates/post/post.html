@@ -1,0 +1,88 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/blog/blog.css' %}">
+
+{% endblock %}
+
+{% block title %}Posts{% endblock %}
+
+{% block content %}
+    
+    <div class="container">
+            
+        <h1 class="page-title reveal">Posts</h1>
+
+        {% if posts %}
+            
+            <div class="posts-grid">
+                
+                {% for post in posts %}
+                    
+                    <article class="post-card reveal" 
+                            data-post-id="{{ post.id }}"
+                            data-title="{{ post.title|escape }}"
+                            data-author="{{ post.author.username|escape }}"
+                            data-date="{{ post.created_at|date:'F j, Y, g:i a' }}"
+                    >
+
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+                        {% endif %}
+                        
+                        <h2 class="post-title">{{ post.title }}</h2>
+
+                        <div class="post-full-content" style="display:none;">
+                            {{ post.content|linebreaks }}
+                        </div>
+                    
+                    </article>
+                
+                {% endfor %}
+            
+            </div>
+
+            <div class="pagination reveal">
+            
+                {% if posts.has_previous %}
+                    <a href="?page={{ posts.previous_page_number }}">&laquo; Anterior</a>
+                {% endif %}
+
+                    <span>Página {{ post.number }} of {{ post.paginator.num_pages }}</span>
+
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}">Siguiente &raquo;</a>
+                {% endif %}
+            
+            </div>
+
+            <div id="post-modal" class="modal">
+            
+                <div class="modal-content">
+            
+                    <span class="close-button">&times;</span>
+                    <h2 id="modal-title"></h2>
+                    <p><strong>Autor:</strong> <span id="modal-author"></span></p>
+                    <p><strong>Fecha:</strong> <span id="modal-date"></span></p>
+                    <div id="modal-content"></div>
+            
+                </div>
+            
+            </div>
+
+        {% else %}
+            <p class="no-posts">No tienes posts aún.</p>
+        {% endif %}
+    
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script src="{% static 'js/blog.js' %}"></script>
+
+{% endblock %}

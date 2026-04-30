@@ -1,0 +1,63 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <style>
+        .lockout-container {
+            max-width: 500px;
+            margin: 80px auto;
+            padding: 40px;
+            text-align: center;
+            background: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid #333
+        }
+        .lockout-icon {
+            font-size: 50px;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        .lockout-container h2 {
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .lockout-container p {
+            color: white;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .btn-timer {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .btn-timer:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Acceso restringido{% endblock %}
+
+{% block content %}
+<div class="lockout-container">
+    <div class="lockout-icon">🔒</div>
+    <h2>Acceso Restringido</h2>
+    <p>
+        Has superado el número máximo de intentos de inicio de sesión permitidos. 
+        Por tu seguridad, esta cuenta ha sido bloqueada temporalmente.
+    </p>
+    <p><strong>Vuelve a intentarlo en 60 minutos o contacta al soporte.</strong></p>
+    
+    <div class="btn-container">
+        <a href="{% url 'index' %}" class="btn-timer">Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+<nav>
+    
+    <ul class="nav-list">
+        <li><a href="{% url 'index' %}">Inicio</a></li>
+        <li><a href="{% url 'post:post' %}">Blog</a></li>
+        <li><a href="{% url 'shop:shop' %}">Tienda</a></li>
+    </ul>
+
+    {% if user.is_authenticated %}
+        
+        <div class="user-info">
+            
+            {% if user.is_staff %}
+                <a href="{% url 'dashboard:dashboard' %}" style="color: #4bc0c0; font-weight: bold;">📊 Panel</a> |
+            {% endif %}
+            
+            <a href="{% url 'orders:mis_compras' %}">Mis pedidos</a>
+            
+            | Bienvenido, {{ user.username }} | <a href="{% url 'user:logout' %}">Cerrar sesión</a>
+        
+        </div>
+        
+    {% else %}
+        
+        <ul class="nav-list auth-links">
+            <li><a href="{% url 'user:login' %}">Iniciar sesión</a></li>
+            <li><a href="{% url 'user:register' %}">Registrarse</a></li>
+        </ul>
+    
+    {% endif %}
+
+</nav>

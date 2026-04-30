@@ -1,0 +1,22 @@
+<div id="cart-overlay" class="cart-overlay"></div>
+
+<div id="side-cart" class="side-cart">
+    
+    <div class="side-cart-header">
+        <h3>🛒 Carrito de compra</h3>
+        <button id="close-cart" class="close-btn">&times;</button>
+    </div>
+
+    <div id="side-cart-items" class="side-cart-body">
+        <p>Cargando...</p>
+    </div>
+
+    <div class="side-cart-footer">
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="side-cart-total">$0.00</span>
+        </div>
+        <a href="{% url 'cart:cart' %}" class="btn-full-cart">Ver carrito</a>
+    </div>
+
+</div>

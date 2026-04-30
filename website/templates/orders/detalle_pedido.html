@@ -1,0 +1,55 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/shop/checkout.css' %}">
+
+{% endblock %}
+
+{% block title %}Detall del pedido #{{ pedido.id }}{% endblock %}
+
+{% block content %}
+    
+    <div class="detalle-pedido-container">
+        
+        <h2>Detalle del pedido #{{ pedido.id }}</h2>
+        
+        <div class="pedido-info">
+        
+            <p><strong>Fecha:</strong> {{ pedido.created_at|date:"d/m/Y H:i" }}</p>
+            <p><strong>Nombre:</strong> {{ pedido.full_name }}</p>
+            <p><strong>Dirección:</strong> {{ pedido.address }}, {{ pedido.city }}, {{ pedido.country }}</p>
+        
+        </div>
+
+        <h3>Productos:</h3>
+        
+        {% if items %}
+            
+            <ul class="productos-lista">
+                
+                {% for item in items %}
+                    
+                    <li class="producto-item">
+                        <span class="producto-nombre">{{ item.product.name }}</span> - 
+                        <span class="producto-cantidad">Cantidad: {{ item.quantity }}</span> - 
+                        <span class="producto-precio">Precio unitario: ${{ item.price }}</span>
+                    </li>
+                
+                {% endfor %}
+            
+            </ul>
+            
+            {% else %}
+            <p>No hay productos en este pedido.</p>
+        
+        {% endif %}
+
+        <a href="{% url 'orders:mis_compras' %}" class="btn-volver">Volver a pedidos</a>
+    
+    </div>
+
+{% endblock %}
+

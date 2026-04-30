@@ -1,0 +1,75 @@
+{% extends "layout/base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'style/shop/shop.css' %}">
+
+{% endblock %}
+
+{% block title %}Carrito de Compra{% endblock %}
+
+{% block content %}
+
+    <h1>Cart</h1>
+
+    {% if cart_items %}
+
+        <table class="cart-table">
+            
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                
+                {% for item in cart_items %}
+                    
+                    <tr>
+                        <td>
+                        <img src="{{ item.image }}" alt="{{ item.name }}" class="cart-row">
+                        {{ item.name }}
+                        </td>
+                        <td>${{ item.price }}</td>
+                        <td>
+                        <form method="post" action="{% url 'cart:cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ item.id }}">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" aria-label="Qty">
+                            <button type="submit" name="action" value="update" class="cart-btn cart-btn-update">Actualizar</button>
+                        </form>
+                        </td>
+                        <td>${{ item.subtotal }}</td>
+                        <td>
+                        <form method="post" action="{% url 'cart:cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ item.id }}">
+                            <button type="submit" name="action" value="remove" class="cart-btn cart-btn-remove">Borrar</button>
+                        </form>
+                        </td>
+                    </tr>
+                
+                {% endfor %}
+            
+            </tbody>
+        
+        </table>
+
+        <p class="total-price">Total: ${{ total_price }}</p>
+
+        <a href="{% url 'orders:checkout' %}" class="btn-back-to-shop">Finalizar Compra</a>
+
+    {% else %}
+        <p class="cart-text">No hay productos disponibles en el carrito.</p>
+    {% endif %}
+
+    <a href="{% url 'shop:shop' %}" class="btn-back-to-shop">Ir a la Tienda</a>
+
+{% endblock %}
