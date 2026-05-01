@@ -52,7 +52,7 @@ def register(request):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
             domain = get_current_site(request).domain
-            link = f"http://{domain}/user/activate/{uid}/{token}/"
+            link = f"https://{domain}/user/activate/{uid}/{token}/"
 
             thread = threading.Thread(
                 target=send_token_email_sync, 
