@@ -1,8 +1,9 @@
+import threading
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from .tasks import send_token
+from .tasks import send_token_email_sync
 
 User = get_user_model()
 
@@ -36,18 +37,22 @@ class UserForm(UserCreationForm):
             raise forms.ValidationError("This username is already taken.")
         return username
 
-class celery_token(PasswordResetForm):
-
+class CustomPasswordResetForm(PasswordResetForm):
+    
     def send_mail(self, subject_template_name, email_template_name,
                   context, from_email, to_email, html_email_template_name=None):
         
-        from django.core.mail import EmailMultiAlternatives
         from django.template.loader import render_to_string
 
+        subject = "Password Reset Requested"
         body = render_to_string(email_template_name, context)
         
-        send_token.delay(
-            subject="Password Reset Requested",
-            message=body,
-            recipient_list=[to_email]
+        thread = threading.Thread(
+            target=send_token_email_sync,
+            kwargs={
+                'subject': subject,
+                'message': body,
+                'user_email': to_email
+            }
         )
+        thread.start()
