@@ -1,3 +1,4 @@
+import threading
 from django.shortcuts import render, redirect, resolve_url
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib import messages
@@ -6,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.sites.shortcuts import get_current_site
-from .tasks import send_token 
+from .tasks import send_token_email_sync
 
 User = get_user_model()
 
@@ -53,7 +54,11 @@ def register(request):
             domain = get_current_site(request).domain
             link = f"http://{domain}/user/activate/{uid}/{token}/"
 
-            send_token.delay(user.username, user.email, link)
+            thread = threading.Thread(
+                target=send_token_email_sync, 
+                args=(user.username, user.email, link)
+            )
+            thread.start()
             
             return redirect('user:check_email')
         

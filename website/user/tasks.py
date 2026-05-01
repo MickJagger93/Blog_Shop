@@ -1,13 +1,10 @@
-from celery import shared_task
+import threading
 from django.core.mail import send_mail
 from django.conf import settings
 
-@shared_task
-def send_token(username=None, user_email=None, link=None, **kwargs):
-    
-    subject = kwargs.get('subject', 'Confirm your account')
-    message = kwargs.get('message', f"Hello {username}, click here: {link}")
-    
+def send_token_email_sync(username=None, user_email=None, link=None, **kwargs):
+    subject = kwargs.get('subject', 'Confirma tu cuenta')
+    message = kwargs.get('message', f"Hola {username}, haz click aquí: {link}")
     email_to = user_email or kwargs.get('recipient_list', [None])[0]
 
     if email_to:
@@ -19,8 +16,7 @@ def send_token(username=None, user_email=None, link=None, **kwargs):
             fail_silently=False,
         )
 
-@shared_task
-def send_order_email(subject, message, recipient_email):
+def send_order_email_sync(subject, message, recipient_email):
     send_mail(
         subject,
         message,

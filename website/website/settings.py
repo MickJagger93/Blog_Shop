@@ -193,10 +193,10 @@ STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 # Redis
 
-CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
-CELERY_BROKER_USE_SSL = {'ssl_cert_reqs': 'none'}
-CELERY_REDIS_BACKEND_USE_SSL = {'ssl_cert_reqs': 'none'}
+#CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+#CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+#CELERY_BROKER_USE_SSL = {'ssl_cert_reqs': 'none'}
+#CELERY_REDIS_BACKEND_USE_SSL = {'ssl_cert_reqs': 'none'}
 
 if not DEBUG:
     # Solo envía cookies a través de HTTPS
