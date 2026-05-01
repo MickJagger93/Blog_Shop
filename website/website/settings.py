@@ -155,6 +155,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/' 
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__)) 
+BASE_ROOT = os.path.dirname(PROJECT_ROOT) 
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
