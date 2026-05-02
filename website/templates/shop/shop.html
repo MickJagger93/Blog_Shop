@@ -43,7 +43,9 @@
                     
                         <div class="image-container">
                             
-                            <img src="{% static 'img/'|add:category.slug|add:'.png' %}" alt="{{ category.name }}" class="category-img">
+                            {% if category.image %}
+                                <img src="{%  category.image.url %}" alt="{{ category.name }}" class="category-img">
+                            {% endif %}
                             <div class="overlay-text">{{ category.name }}</div>
                         
                         </div>

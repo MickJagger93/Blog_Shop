@@ -9,6 +9,7 @@ class Category(models.Model):
     
     name = models.CharField(max_length=100, verbose_name="Nombre")
     slug = models.SlugField(unique=True)
+    image = CloudinaryField('image', folder='categories', blank=True, null=True)
 
     class Meta:
 
