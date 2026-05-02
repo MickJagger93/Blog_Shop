@@ -23,6 +23,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     
     email = models.EmailField(verbose_name='Correo electrónico', max_length=255, unique=True)
+    username = models.CharField(max_length=150, unique=True, verbose_name='Nombre de usuario')
     
     is_active = models.BooleanField(default=True, verbose_name="¿Está activo?")
     is_admin = models.BooleanField(default=False, verbose_name="¿Es administrador?")   

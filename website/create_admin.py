@@ -13,11 +13,10 @@ password = 'Test44%%'
 
 try:
     
-    User.objects.filter(email='Mick93').delete()
     User.objects.filter(username=username).delete()
     User.objects.filter(email=email).delete()
     
-    User.objects.create_superuser(username, email, password)
+    User.objects.create_superuser(email=email, username=username, password=password)
     print(f"✅ ÉXITO: Superusuario '{username}' creado desde cero.")
 
 except Exception as e:
