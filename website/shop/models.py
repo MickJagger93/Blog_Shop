@@ -25,7 +25,7 @@ class Product(models.Model):
     slug = models.SlugField(unique=True, null=True, blank=True)
     description = models.TextField(verbose_name="Descripción")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio")
-    image = CloudinaryField('image', folder='products', verbose_name="Imagen")
+    image = CloudinaryField('image', folder='products')
     stock = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True, verbose_name="¿Disponible?")
 
