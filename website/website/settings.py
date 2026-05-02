@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'cloudinary',
     'user',
     'post',
@@ -151,25 +151,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 STATIC_URL = '/static/' 
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__)) 
-BASE_ROOT = os.path.dirname(PROJECT_ROOT) 
-
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    BASE_DIR / "static",
 ]
 
-print(f"DEBUG: Buscando estáticos en: {STATICFILES_DIRS[0]}")
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'staticfiles'))
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
