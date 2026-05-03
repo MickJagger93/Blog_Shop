@@ -3,10 +3,11 @@ from import_export import resources, fields
 from import_export.widgets import ForeignKeyWidget
 from import_export.admin import ImportExportModelAdmin, ExportMixin
 from .models import Category, Product, UserActivity
+from .widgets import CloudinaryImageWidget
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')  # Solo campos válidos para Category
+    list_display = ('name', 'slug')  
     prepopulated_fields = {'slug': ('name',)}
 
 class ProductResource(resources.ModelResource):
@@ -16,10 +17,16 @@ class ProductResource(resources.ModelResource):
         widget=ForeignKeyWidget(Category, 'name')
     )
 
+    image = fields.Field(
+        column_name='image',
+        attribute='image',
+        widget=CloudinaryImageWidget()
+    )
+
     class Meta:
         
         model = Product
-        fields = ('name', 'category', 'description', 'price', 'stock', 'is_active', 'image')
+        fields = ('id', 'name', 'category', 'description', 'price', 'stock', 'is_active', 'image')
         import_id_fields = ('name',)
 
 @admin.register(Product)
