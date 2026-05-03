@@ -1,3 +1,4 @@
+import cloudinary
 from django.contrib import admin
 from import_export import resources, fields
 from import_export.widgets import ForeignKeyWidget, Widget
@@ -32,13 +33,27 @@ class ProductResource(resources.ModelResource):
     )
 
     class Meta:
+        
         model = Product
-        fields = ('name', 'category', 'description', 'price', 'stock', 'is_active', 'image')
+        fields = ('name', 'category', 'description', 'price', 'stock', 'is_active')
         import_id_fields = ('name',)
 
     def before_import_row(self, row, **kwargs):
+        
+        self.current_image = row.get('image')
+        
         if 'name' in row and row['name']:
             row['slug'] = slugify(row['name'])
+
+    def before_save_instance(self, instance, using_transactions, dry_run):
+
+        if not dry_run and hasattr(self, 'current_image') and self.current_image:
+           
+            public_id = str(self.current_image).strip()
+            
+            instance.image = cloudinary.CloudinaryResource(public_id=public_id)
+            
+        super().before_save_instance(instance, using_transactions, dry_run)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
