@@ -1,8 +1,15 @@
 from django.contrib import admin
 from import_export import resources, fields
-from import_export.widgets import ForeignKeyWidget
+from import_export.widgets import ForeignKeyWidget, Widget
 from import_export.admin import ImportExportModelAdmin, ExportMixin
 from .models import Category, Product, UserActivity
+from django.utils.text import slugify
+
+class CloudinaryWidget(Widget):
+    def clean(self, value, row=None, **kwargs):
+        if not value:
+            return None
+        return str(value).strip()
 
 class ProductResource(resources.ModelResource):
     
@@ -11,9 +18,20 @@ class ProductResource(resources.ModelResource):
         attribute='category',
         widget=ForeignKeyWidget(Category, 'name'))
 
+    image = fields.Field(
+        column_name='image',
+        attribute='image',
+        widget=CloudinaryWidget()
+    )
+
     class Meta:
         model = Product
-        fields = ('id', 'name', 'slug', 'category', 'description', 'price', 'stock', 'is_active', 'featured', 'image')
+        fields = ('name', 'category', 'description', 'price', 'stock', 'is_active', 'image')
+        import_id_fields = ('name')
+
+    def before_import_row(self, row, **kwargs):
+        if 'name' in row and row['name']:
+            row['slug'] = slugify(row['name'])
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
