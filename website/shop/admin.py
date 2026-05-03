@@ -4,12 +4,19 @@ from import_export.widgets import ForeignKeyWidget, Widget
 from import_export.admin import ImportExportModelAdmin, ExportMixin
 from .models import Category, Product, UserActivity
 from django.utils.text import slugify
+from cloudinary import CloudinaryResource
 
 class CloudinaryWidget(Widget):
     def clean(self, value, row=None, **kwargs):
         if not value:
             return None
-        return str(value).strip()
+        
+        cleaned_value = str(value).strip()
+        
+        if "res.cloudinary.com" in cleaned_value:
+            return cleaned_value
+            
+        return CloudinaryResource(public_id=cleaned_value, type="upload", resource_type="image")
 
 class ProductResource(resources.ModelResource):
     
