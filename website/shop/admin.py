@@ -6,16 +6,13 @@ from .models import Category, Product, UserActivity
 from .widgets import CloudinaryImageWidget
 from django.utils.text import slugify
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')  
-    prepopulated_fields = {'slug': ('name',)}
-
 class ProductResource(resources.ModelResource):
+    
     category = fields.Field(
         column_name='category',
         attribute='category',
-        widget=ForeignKeyWidget(Category, 'slug') 
+        
+        widget=ForeignKeyWidget(Category, 'name')
     )
 
     image = fields.Field(
@@ -26,8 +23,8 @@ class ProductResource(resources.ModelResource):
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'slug', 'category', 'description', 'price', 'stock', 'is_active', 'image')
-        import_id_fields = ('id',)  
+        fields = ('id', 'name', 'category', 'description', 'price', 'stock', 'is_active', 'image')
+        import_id_fields = ('id',)
 
     def before_import_row(self, row, **kwargs):
         
