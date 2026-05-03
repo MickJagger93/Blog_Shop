@@ -1,3 +1,4 @@
+import cloudinary
 from django.db import models
 from django.utils.text import slugify
 from user.models import User
@@ -21,7 +22,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name="Categoría")
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='products', verbose_name="Categoría")
     name = models.CharField(max_length=255, verbose_name="Nombre")
     slug = models.SlugField(unique=True, null=True, blank=True)
     description = models.TextField(verbose_name="Descripción")
@@ -31,16 +32,22 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True, verbose_name="¿Disponible?")
 
     class Meta:
-
         verbose_name = "Producto"
         verbose_name_plural = "Productos"
-    
+
     def __str__(self):
         return self.name
-    
+
     def save(self, *args, **kwargs):
+        
         if not self.slug:
             self.slug = slugify(self.name)
+            
+        if self.image and isinstance(self.image, str):
+            
+            public_id = self.image.strip()
+            self.image = cloudinary.CloudinaryResource(public_id=public_id)
+            
         super().save(*args, **kwargs)
 
 class UserActivity(models.Model):

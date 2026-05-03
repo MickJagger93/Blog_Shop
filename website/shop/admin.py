@@ -7,18 +7,6 @@ from .models import Category, Product, UserActivity
 from django.utils.text import slugify
 from cloudinary import CloudinaryResource
 
-class CloudinaryWidget(Widget):
-    def clean(self, value, row=None, **kwargs):
-        if not value:
-            return None
-        
-        cleaned_value = str(value).strip()
-        
-        if "res.cloudinary.com" in cleaned_value:
-            return cleaned_value
-            
-        return CloudinaryResource(public_id=cleaned_value, type="upload", resource_type="image")
-
 class ProductResource(resources.ModelResource):
     
     category = fields.Field(
@@ -26,42 +14,17 @@ class ProductResource(resources.ModelResource):
         attribute='category',
         widget=ForeignKeyWidget(Category, 'name'))
 
-    image = fields.Field(
-        column_name='image',
-        attribute='image',
-        widget=CloudinaryWidget()
-    )
-
     class Meta:
         
         model = Product
         fields = ('name', 'category', 'description', 'price', 'stock', 'is_active')
         import_id_fields = ('name',)
 
-    def before_import_row(self, row, **kwargs):
-        
-        self.current_image = row.get('image')
-        
-        if 'name' in row and row['name']:
-            row['slug'] = slugify(row['name'])
-
-    def before_save_instance(self, instance, **kwargs):
-
-        dry_run = kwargs.get('dry_run', False)
-
-        if not dry_run and hasattr(self, 'current_image') and self.current_image:
-           
-            public_id = str(self.current_image).strip()
-            
-            instance.image = cloudinary.CloudinaryResource(public_id=public_id)
-            
-        super().before_save_instance(instance, **kwargs)
-
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
 
-    list_display = ('name', 'slug')
-    prepopulated_fields = {'slug': ('name',)}
+    resource_class = ProductResource
+    list_display = ('name', 'category', 'is_active')
 
 @admin.register(Product)
 class ProductAdmin(ImportExportModelAdmin):
