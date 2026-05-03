@@ -27,7 +27,7 @@ class ProductResource(resources.ModelResource):
     class Meta:
         model = Product
         fields = ('name', 'category', 'description', 'price', 'stock', 'is_active', 'image')
-        import_id_fields = ('name')
+        import_id_fields = ('name',)
 
     def before_import_row(self, row, **kwargs):
         if 'name' in row and row['name']:
