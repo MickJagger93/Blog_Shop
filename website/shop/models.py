@@ -1,10 +1,7 @@
-import cloudinary
 from django.db import models
 from django.utils.text import slugify
-from user.models import User
 from cloudinary.models import CloudinaryField
-
-from django.db import models
+from user.models import User  
 
 class Category(models.Model):
     
@@ -13,7 +10,6 @@ class Category(models.Model):
     image = CloudinaryField('image', folder='categories', blank=True, null=True)
 
     class Meta:
-
         verbose_name = "Categoría"
         verbose_name_plural = "Categorías"
 
@@ -22,7 +18,12 @@ class Category(models.Model):
 
 class Product(models.Model):
     
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='products', verbose_name="Categoría")
+    category = models.ForeignKey(
+        Category, 
+        on_delete=models.CASCADE, 
+        related_name='products', 
+        verbose_name="Categoría"
+    )
     name = models.CharField(max_length=255, verbose_name="Nombre")
     slug = models.SlugField(unique=True, null=True, blank=True)
     description = models.TextField(verbose_name="Descripción")
@@ -39,15 +40,13 @@ class Product(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        
+       
         if not self.slug:
             self.slug = slugify(self.name)
             
         if self.image and isinstance(self.image, str):
-            
-            public_id = self.image.strip()
-            self.image = cloudinary.CloudinaryResource(public_id=public_id)
-            
+            self.image = self.image.strip()
+
         super().save(*args, **kwargs)
 
 class UserActivity(models.Model):

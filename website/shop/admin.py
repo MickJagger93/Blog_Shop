@@ -4,6 +4,7 @@ from import_export.widgets import ForeignKeyWidget
 from import_export.admin import ImportExportModelAdmin, ExportMixin
 from .models import Category, Product, UserActivity
 from .widgets import CloudinaryImageWidget
+from django.utils.text import slugify
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -14,7 +15,7 @@ class ProductResource(resources.ModelResource):
     category = fields.Field(
         column_name='category',
         attribute='category',
-        widget=ForeignKeyWidget(Category, 'name')
+        widget=ForeignKeyWidget(Category, 'slug') 
     )
 
     image = fields.Field(
@@ -24,10 +25,15 @@ class ProductResource(resources.ModelResource):
     )
 
     class Meta:
-        
         model = Product
-        fields = ('id', 'name', 'category', 'description', 'price', 'stock', 'is_active', 'image')
-        import_id_fields = ('name',)
+        fields = ('id', 'name', 'slug', 'category', 'description', 'price', 'stock', 'is_active', 'image')
+        import_id_fields = ('id',)  
+
+    def before_import_row(self, row, **kwargs):
+        
+        if 'slug' not in row or not row['slug']:
+            if 'name' in row and row['name']:
+                row['slug'] = slugify(row['name'])
 
 @admin.register(Product)
 class ProductAdmin(ImportExportModelAdmin):
