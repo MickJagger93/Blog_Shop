@@ -45,7 +45,7 @@ class ProductResource(resources.ModelResource):
         if 'name' in row and row['name']:
             row['slug'] = slugify(row['name'])
 
-    def before_save_instance(self, instance, using_transactions, dry_run):
+    def before_save_instance(self, instance, using_transactions, dry_run, *args, **kwargs):
 
         if not dry_run and hasattr(self, 'current_image') and self.current_image:
            
@@ -53,7 +53,7 @@ class ProductResource(resources.ModelResource):
             
             instance.image = cloudinary.CloudinaryResource(public_id=public_id)
             
-        super().before_save_instance(instance, using_transactions, dry_run)
+        super().before_save_instance(instance, using_transactions, dry_run, *args, **kwargs)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
