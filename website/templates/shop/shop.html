@@ -44,7 +44,7 @@
                         <div class="image-container">
                             
                             {% if category.image %}
-                                <img src="{{%  category.image.url %}}" alt="{{ category.name }}" class="category-img">
+                                <img src="{{% category.image.url %}}" alt="{{ category.name }}" class="category-img">
                             {% endif %}
                             <div class="overlay-text">{{ category.name }}</div>
                         
