@@ -177,6 +177,9 @@ def bank_transfer(request):
                 product.stock -= item.stock
                 product.save()
 
+            order.paid = True
+            order.save()
+
         request.session['cart'] = {}
         return redirect('orders:order_success')
 
