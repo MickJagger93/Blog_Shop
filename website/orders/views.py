@@ -182,6 +182,8 @@ def bank_transfer(request):
 
             order.save()
 
+            # Migración
+
             subject = f'🚨 Nueva Orden Pendiente #{order.id}'
             message = (
                 f'Hola Admin,\n\n'
