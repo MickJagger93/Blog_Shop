@@ -172,7 +172,9 @@ def bank_transfer(request):
     if request.method == 'POST':
 
         order = Order.objects.filter(user=request.user, paid=False).last()
+        
         if order:
+        
             for item in order.items.all():
                 product = item.product
                 product.stock -= item.stock
@@ -199,7 +201,9 @@ def bank_transfer(request):
                     logger = logging.getLogger(__name__)
                     logger.error(f"Error enviando email al admin: {str(e)}")
 
-        request.session['cart'] = {}
+        if 'cart' in request.session:
+            del request.session['cart']
+            
         return redirect('orders:order_success')
 
     return render(request, 'orders/bank_transfer.html', {

@@ -8,7 +8,7 @@ from user.tasks import send_order_email_sync
 logger = logging.getLogger(__name__)
 
 @receiver(post_save, sender=Order)
-def enviar_notificaciones_orden(sender, instance, created, **kwargs):
+def enviar_notificaciones_orden_verificado(sender, instance, created, **kwargs):
     
     if not created and instance.paid:
         
