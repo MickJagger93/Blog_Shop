@@ -9,6 +9,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from user.tasks import send_order_email_sync
+import logging
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -166,6 +167,7 @@ def create_payment(request):
 def bank_transfer(request):
     
     cart = request.session.get('cart', {})
+    
     if not cart:
         return redirect('cart:cart')
 
@@ -189,7 +191,7 @@ def bank_transfer(request):
                 f'por transferencia bancaria.\n'
                 f'Por favor verifica el pago en el panel de administración.'
             )
-            admin_email = getattr(settings, 'ADMIN_EMAIL', settings.EMAIL_HOST_USER)
+            admin_email = getattr(settings, 'ADMIN_EMAIL', None)
 
             if admin_email:
                 
@@ -197,7 +199,6 @@ def bank_transfer(request):
                     send_order_email_sync(subject, message, admin_email)
                 except Exception as e:
                     
-                    import logging
                     logger = logging.getLogger(__name__)
                     logger.error(f"Error enviando email al admin: {str(e)}")
 

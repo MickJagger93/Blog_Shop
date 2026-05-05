@@ -1,7 +1,6 @@
 import logging
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.conf import settings
 from .models import Order
 from user.tasks import send_order_email_sync  
 
