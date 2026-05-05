@@ -183,7 +183,7 @@ ADMIN_EMAIL = os.getenv('EMAIL_HOST_USER')
 
 """
 
-# Django-anymail[resend]
+
 
 EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
 ANYMAIL = {
