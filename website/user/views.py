@@ -1,13 +1,16 @@
-import threading
+#import threading
 from django.shortcuts import render, redirect, resolve_url
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib import messages
-from .forms import AuthForm, UserForm
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
-from django.contrib.sites.shortcuts import get_current_site
-from .tasks import send_token_email_sync
+from .forms import AuthForm, UserForm, RecoveryForm
+#from django.contrib.auth.tokens import default_token_generator
+#from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+#from django.utils.encoding import force_bytes
+#from django.contrib.sites.shortcuts import get_current_site
+#from .tasks import send_token_email_sync
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
+
 
 User = get_user_model()
 
@@ -40,27 +43,18 @@ def login(request):
 def register(request):
     
     if request.method == 'POST':
-    
+        
         form = UserForm(request.POST)
-    
+        
         if form.is_valid():
-    
+            
             user = form.save(commit=False)
-            user.is_active = False 
+            user.is_active = True  
             user.save()
 
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = default_token_generator.make_token(user)
-            domain = get_current_site(request).domain
-            link = f"https://{domain}/user/activate/{uid}/{token}/"
-
-            thread = threading.Thread(
-                target=send_token_email_sync, 
-                args=(user.username, user.email, link)
-            )
-            thread.start()
+            messages.success(request, f"¡Registro exitoso, {user.username}! Ya puedes iniciar sesión.")
             
-            return redirect('user:check_email')
+            return redirect('user:login')
         
         else:
             messages.error(request, "Por favor completa los campos correctamente.")
@@ -68,6 +62,10 @@ def register(request):
         form = UserForm()
     
     return render(request, 'register/register.html', {'form': form})
+
+# Logica de activacion de correo electronico mediante token
+
+"""
 
 def check_email(request):
 
@@ -94,6 +92,38 @@ def activate(request, uidb64, token):
     else:
         
         return render(request, 'register/activation_invalid.html')
+
+"""
+
+def custom_password_reset(request):
+    
+    if request.user.is_authenticated:
+        
+        return redirect('user:home') 
+
+    if request.method == 'POST':
+        
+        form = RecoveryForm(request.POST)
+        
+        if form.is_valid():
+            
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('nueva_contraseña')
+            
+            user = User.objects.get(email=email)
+            user.set_password(password)
+            user.save()
+            return redirect('user:password_reset_complete')
+    
+    else:
+    
+        form = RecoveryForm()
+        
+    return render(request, 'password_reset/password_reset_form.html', {'form': form})
+
+def custom_password_reset_complete(request):
+    
+    return render(request, 'password_reset/password_reset_complete.html')
 
 def logout_view(request):
     

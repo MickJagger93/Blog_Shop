@@ -1,9 +1,9 @@
-import threading
+#import threading
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from .tasks import send_token_email_sync
+#from .tasks import send_token_email_sync
 
 User = get_user_model()
 
@@ -14,7 +14,7 @@ class AuthForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         
         if not user.is_active:
-            raise ValidationError("This user is not active.", code='inactive')
+            raise ValidationError("Esta cuenta no está activa.", code='inactive')
 
 class UserForm(UserCreationForm):
     
@@ -26,7 +26,7 @@ class UserForm(UserCreationForm):
         fields = ('username', 'email',)
 
     def clean_email(self):
-        email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email').lower()
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("There is already exist a user with this email.")
         return email
@@ -36,6 +36,8 @@ class UserForm(UserCreationForm):
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("This username is already taken.")
         return username
+
+"""
 
 class celery_token(PasswordResetForm):
     
@@ -56,3 +58,39 @@ class celery_token(PasswordResetForm):
             }
         )
         thread.start()
+
+"""
+
+class RecoveryForm(forms.Form):
+    
+    email = forms.EmailField(
+        label="Tu correo electrónico", 
+        max_length=254,
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'ejemplo@correo.com'})
+    )
+    
+    nueva_contraseña = forms.CharField(
+        label="Nueva contraseña", 
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '********'})
+    )
+    
+    confirmar_contraseña = forms.CharField(
+        label="Confirma tu nueva contraseña", 
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '********'})
+    )
+
+    def clean_email(self):
+        
+        email = self.cleaned_data.get('email').lower()
+        if not User.objects.filter(email=email).exists():
+            raise forms.ValidationError("No existe ninguna cuenta registrada con este correo.")
+        return email
+
+    def clean(self):
+        
+        cleaned_data = super().clean()
+        password = cleaned_data.get("nueva_contraseña")
+        confirm = cleaned_data.get("confirmar_contraseña")
+        if password and confirm and password != confirm:
+            raise forms.ValidationError("Las contraseñas nuevas no coinciden.")
+        return cleaned_data
