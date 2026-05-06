@@ -1,7 +1,7 @@
 from django.urls import path
 #from django.urls import path, reverse_lazy
-from .views import login, register, logout_view, activate, check_email
-from django.contrib.auth import views as auth_views
+from .views import login, register, logout_view, custom_password_reset, custom_password_reset_complete
+from django.contrib.auth import views
 #from .forms import celery_token
 
 app_name = 'user'
@@ -41,7 +41,7 @@ urlpatterns = [
        #  ), 
         # name='password_reset_complete'),
 
-    path('password_reset/', auth_views.CustomPasswordChangeView.as_view(), name='password_reset'),
-    path('password_reset/done/', auth_views.CustomPasswordChangeDoneView.as_view(), name='password_reset_complete'),
+    path('password_reset/', custom_password_reset, name='password_reset'),
+    path('password_reset/done/', custom_password_reset_complete, name='password_reset_complete'),
 
 ]
