@@ -98,3 +98,23 @@ form button:hover {
 .reset-password-link a:hover {
   text-decoration: underline;
 }
+
+/* Responsivo */
+
+@media (max-width: 480px) {
+  .login-container {
+    width: 90%; 
+    padding: 2rem 1.5rem; 
+  }
+
+  .login-container h2 {
+    font-size: 1.6rem; 
+  }
+
+  .login-wrapper {
+    
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 0; 
+  }
+}

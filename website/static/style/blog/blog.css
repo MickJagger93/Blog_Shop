@@ -131,3 +131,53 @@
   color: #bbb;
   margin-top: 3rem;
 }
+
+/* ============================================================
+   AJUSTES RESPONSIVOS: BLOG Y MODAL DE POSTS
+   ============================================================ */
+
+@media (max-width: 992px) {
+  
+  .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+ 
+  .page-title {
+      font-size: 1.8rem;
+  }
+
+  .modal-content {
+      margin: 10% auto;
+      padding: 1.5rem 1.5rem; 
+      width: 95%;
+  }
+
+  .close-button {
+      right: 1rem;
+      top: 0.5rem;
+  }
+}
+
+@media (max-width: 580px) {
+ 
+  .posts-grid {
+      grid-template-columns: 1fr;
+  }
+
+  .post-card {
+      padding: 0.8rem;
+  }
+
+  .post-title {
+      font-size: 1.1rem;
+  }
+
+  .pagination a {
+      display: inline-block;
+      margin: 0.5rem;
+  }
+}

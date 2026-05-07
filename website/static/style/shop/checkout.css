@@ -579,3 +579,76 @@ h3 {
     font-size: 0.9rem;
     color: #666;
 }
+
+/* --- ESTILOS RESPONSIVOS --- */
+
+/* Tablet y Móviles grandes (menos de 768px) */
+@media (max-width: 768px) {
+  .checkout-container, 
+  .order-success-container, 
+  .mis-compras-container, 
+  .detalle-pedido-container,
+  .stripe-container,
+  .method-container {
+    width: 90%; /* Evita que el contenedor toque los bordes */
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .methods-grid {
+    flex-direction: column; /* Las tarjetas de pago se apilan */
+    align-items: center;
+  }
+
+  .method-card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .order-success-links {
+    flex-direction: column;
+    margin-top: 50px; /* Reducimos el margen excesivo de 290px */
+    gap: 10px;
+  }
+
+  .action-buttons {
+    flex-direction: column; /* Botones de transferencia bancaria uno sobre otro */
+  }
+
+  .btn-confirm, .btn-back {
+    width: 100%;
+  }
+}
+
+/* Móviles pequeños (menos de 480px) */
+@media (max-width: 480px) {
+  .pedido-header {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .producto-item {
+    flex-direction: column; /* Nombre, cantidad y precio en lista */
+    text-align: center;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .value {
+    text-align: center;
+  }
+
+  .bank-title {
+    font-size: 1.2rem;
+  }
+
+  /* Ajuste para que los botones de ancho contenido no se rompan */
+  .payment-submit, .btn-back-to-cart, .btn-volver {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

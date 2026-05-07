@@ -787,3 +787,84 @@ footer h3 {
         justify-content: center;
     }
 }
+
+/* ============================================================
+   AJUSTES RESPONSIVOS GLOBALES (Añadir al final del archivo)
+   ============================================================ */
+
+@media (max-width: 992px) {
+  
+  .welcome-container h2, .blog-title, .shop-title {
+      font-size: 3.5rem !important; 
+  }
+}
+
+@media (max-width: 768px) {
+ 
+  nav {
+      padding: 1rem;
+      flex-direction: column;
+      gap: 10px;
+      position: static; 
+      background: #000;
+  }
+  
+  .nav-list {
+      gap: 0.8rem;
+      font-size: 0.9rem;
+  }
+
+  .side-cart {
+      width: 100%; 
+      right: -100%;
+  }
+
+  .welcome-container h2, .blog-title, .shop-title {
+      font-size: 2.2rem !important;
+      line-height: 1.2;
+  }
+
+  .welcome-container p, .blog-description, .shop-description {
+      font-size: 1rem;
+  }
+
+  .blog-image-container, .shop-image-container {
+      height: 250px; 
+  }
+
+  .modal-content {
+      width: 95%;
+      padding: 15px;
+      margin: 10px;
+  }
+
+  .icons-container {
+      gap: 20px;
+      flex-wrap: wrap;
+  }
+  
+  .icons-container img {
+      height: 50px; 
+  }
+
+  .cart-icon {
+      top: auto;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 122, 204, 0.9);
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  
+  .featured-posts h2, .featured-products h2 {
+      font-size: 1.5rem;
+  }
+
+  #productModal #modal-img {
+      max-height: 180px;
+  }
+}
