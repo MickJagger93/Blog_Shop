@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class UserManager(BaseUserManager):
     
@@ -17,10 +17,12 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, username, password=None, **extra_fields):
         
         extra_fields.setdefault('is_admin', True)
+        extra_fields.setdefault('is_staff', True)     
+        extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, username, password, **extra_fields)
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     
     email = models.EmailField(verbose_name='Correo electrónico', max_length=255, unique=True)
     username = models.CharField(max_length=150, unique=True, verbose_name='Nombre de usuario')
@@ -44,13 +46,4 @@ class User(AbstractBaseUser):
         
         return self.username if self.username else self.email
 
-    @property
-    def is_staff(self):
-        
-        return self.is_admin
-
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
-
-    def has_module_perms(self, app_label):
-        return self.is_admin
+    is_staff = models.BooleanField(default=False, verbose_name="Acceso al admin")
