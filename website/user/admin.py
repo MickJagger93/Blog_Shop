@@ -4,16 +4,25 @@ from .models import User
 
 class UserAdmin(BaseUserAdmin):
     
-    list_display = ('email', 'username', 'is_admin')
-    list_filter = ('is_admin',)
+    list_display = ('email', 'username', 'is_admin', 'is_staff')
+    list_filter = ('is_admin', 'is_staff', 'is_superuser')
     
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Información personal', {'fields': ('username',)}),
-        ('Permisos', {'fields': ('is_admin', 'is_active')}),
+        ('Permisos', {'fields': (
+            'is_admin', 
+            'is_active', 
+            'is_staff',     
+            'is_superuser', 
+            'groups',       
+            'user_permissions' 
+        )}),
+        ('Fechas importantes', {'fields': ('last_login',)}),
     )
     
+    filter_horizontal = ('groups', 'user_permissions')
+    
     ordering = ('email',)
-    filter_horizontal = ()
 
 admin.site.register(User, UserAdmin)
