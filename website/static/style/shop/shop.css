@@ -427,6 +427,12 @@ tbody tr:hover td {
   font-size: 25px;
 }
 
+.container-back-btn {
+  text-align: center; 
+  width: 100%;
+  margin-bottom: 40px; 
+}
+
 .btn-back-to-shop {
   display: inline-block;       
   margin-bottom: 40px;    
