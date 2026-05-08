@@ -444,7 +444,9 @@ tbody tr:hover td {
 /* Para centrar en bloque */
 
 .btn-back-to-shop {
-  display: block;
+  display: inline-block;
+  margin-bottom: 40px;   /* Ajusta este valor según cuánto espacio quieras */
+  text-decoration: none;
   width: max-content;
 }
 
