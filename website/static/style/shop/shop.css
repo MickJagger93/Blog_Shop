@@ -398,12 +398,17 @@ tbody tr:hover td {
   color: white;
 }
 
-/* Botón volver a tienda */
+/* Boton para ir al checkout */
 
-.btn-back-to-shop {
-  display: block;
-  width: max-content;
-  margin: 20px auto 0 auto;
+.container-go-btn {
+  text-align: center; 
+  width: 100%;
+  margin-bottom: 40px; 
+}
+
+.btn-go-to-checkout {
+  display: inline-block;
+  margin-bottom: 40px;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -415,7 +420,7 @@ tbody tr:hover td {
   transition: background-color 0.3s ease;
 }
 
-.btn-back-to-shop:hover {
+.btn-go-to-checkout:hover {
   background-color: #0056b3;
   text-decoration: none;
 }
@@ -426,6 +431,8 @@ tbody tr:hover td {
   text-align: center;
   font-size: 25px;
 }
+
+/* Botón volver a tienda */
 
 .container-back-btn {
   text-align: center; 

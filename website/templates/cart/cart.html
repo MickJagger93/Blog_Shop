@@ -64,12 +64,16 @@
 
         <p class="total-price">Total: ${{ total_price }}</p>
 
-        <a href="{% url 'orders:checkout' %}" class="btn-back-to-shop">Finalizar Compra</a>
-
+        <div class="container-go-btn">
+            <a href="{% url 'orders:checkout' %}" class="btn-go-to-checkout">Finalizar Compra</a>
+        </div>
+    
     {% else %}
         <p class="cart-text">No hay productos disponibles en el carrito.</p>
     {% endif %}
 
-    <a href="{% url 'shop:shop' %}" class="btn-back-to-shop">Ir a la Tienda</a>
+    <div class="container-back-btn">
+        <a href="{% url 'shop:shop' %}" class="btn-back-to-shop">Volver a tienda</a>
+    </div>
 
 {% endblock %}

@@ -2,7 +2,7 @@
 
 .checkout-container {
   max-width: 600px;
-  margin: 40px auto;
+  margin: 100px auto 40px auto;
   padding: 20px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.1);
@@ -55,9 +55,8 @@
 }
 
 .payment-submit {
-  display: block;
-  width: max-content;
-  margin: 20px auto 0 auto; 
+  display: inline-block;
+  margin-bottom: 40px;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -67,8 +66,6 @@
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border: none; 
-  font-size: 16px; 
 }
 
 .payment-submit:hover {
@@ -103,10 +100,15 @@ font-weight: bold;
 color: white;
 }
 
+.container-back-btn {
+  text-align: center; 
+  width: 100%;
+  margin-bottom: 40px; 
+}
+
 .btn-back-to-cart {
-  display: block;
-  width: max-content;
-  margin: 20px auto 0 auto;
+  display: inline-block;
+  margin: 40px;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -127,7 +129,7 @@ color: white;
 
 .stripe-container {
   max-width: 420px;
-  margin: 2rem auto;
+  margin: 5rem auto 2rem;
   border: 1px solid #ccc;
   padding: 1.5rem;
   border-radius: 8px;
@@ -190,28 +192,29 @@ color: white;
 }
 
 .btn-back-methods {
-  display: flex;
-  justify-content: center; 
-  margin-top: 1rem;       
+  text-align: center; 
+  width: 100%;
+  margin-bottom: 40px;      
 }
 
 .btn-back-methods a {
-  text-decoration: none;
-  padding: 0.75rem 1.5rem; 
-  font-size: 1em;
-  font-weight: 600;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, opacity 0.3s ease; 
-  color: white;
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 10px 20px;
   background-color: #007bff;
-  display: inline-block;    
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 
 .btn-back-methods a:hover {
   background-color: #0056b3;
-
+  text-decoration: none;
 }
 
 .btn-back-methods:disabled {
