@@ -59,9 +59,19 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+#Configuración de django-axes
+
 AXES_FAILURE_LIMIT = 4            
-AXES_COOLOFF_TIME = 3             
-AXES_LOCKOUT_TEMPLATE = 'lockout.html' 
+AXES_COOLOFF_TIME = 1             
+AXES_LOCKOUT_TEMPLATE = 'lockout.html'
+AXES_RESET_ON_SUCCESS = True 
+AXES_BEHIND_REVERSE_PROXY = True
+AXES_REVERSE_PROXY_HEADER = 'HTTP_X_FORWARDED_FOR'
+AXES_IPWARE_META_PRECEDENCE_ORDER = [
+    'HTTP_X_FORWARDED_FOR',
+    'REMOTE_ADDR',
+]
+AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
